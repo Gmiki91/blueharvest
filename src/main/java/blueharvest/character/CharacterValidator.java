@@ -1,7 +1,7 @@
-package com.dorcica.blueharvest.character;
+package blueharvest.character;
 
-import com.dorcica.blueharvest.validation.ResponseStatus;
-import com.dorcica.blueharvest.validation.ValidationStatus;
+import blueharvest.validation.ResponseStatus;
+import blueharvest.validation.ValidationStatus;
 
 public class CharacterValidator {
     private ResponseStatus responseStatus = new ResponseStatus();

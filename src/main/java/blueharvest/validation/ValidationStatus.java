@@ -1,4 +1,4 @@
-package com.dorcica.blueharvest.validation;
+package blueharvest.validation;
 
 public enum ValidationStatus {
     FAIL,

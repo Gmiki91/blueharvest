@@ -1,4 +1,4 @@
-package com.dorcica.blueharvest.character;
+package blueharvest.character;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,6 +14,6 @@ public class CharacterDao {
     }
 
     public void createCharacter(Character character){
-        jdbcTemplate.update("INSERT into characters (name) values(?)", character.getName());
+        jdbcTemplate.update("INSERT into characters (name, image_id) values(?,?)", character.getName(),character.getImageId());
     }
 }

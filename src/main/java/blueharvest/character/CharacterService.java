@@ -1,4 +1,4 @@
-package com.dorcica.blueharvest.character;
+package blueharvest.character;
 
 import org.springframework.stereotype.Service;
 
