@@ -3,12 +3,23 @@ package blueharvest.character;
 public class Character {
     private long id;
     private String name;
+    private String password;
     private long imageId;
 
-    public Character(long id, String name, long imageId) {
+
+    public Character(long id, String name, String password, long imageId) {
         this.id = id;
         this.name = name;
+        this.password=password;
         this.imageId=imageId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public long getImageId() {

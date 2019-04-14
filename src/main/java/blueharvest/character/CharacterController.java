@@ -2,9 +2,8 @@ package blueharvest.character;
 
 import blueharvest.validation.ResponseStatus;
 import blueharvest.validation.ValidationStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CharacterController {
@@ -22,5 +21,13 @@ public class CharacterController {
             validator.getResponseStatus().addMessages(character.getName()+" sikeresen regisztrálva.");
         }
         return validator.getResponseStatus();
+    }
+    @GetMapping("/character")
+    public Character getCharacter(Authentication aut){
+        if(aut != null){
+           return characterService.getCharacterByName(aut.getName());
+        } else {
+            return null;
+        }
     }
 }

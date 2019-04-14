@@ -18,8 +18,14 @@ function numberOfImages(){
 
 function handleCreateChar(){
     var name = document.getElementById("input-name").value;
+    var password1 = document.getElementById("password-input").value;
+    var password2 = document.getElementById("password-again-input").value;
+    if (password2!==password1){
+        alert("A jelszavak nem egyeznek meg!");
+    }
     var request = {
         "name": name,
+        "password":password1,
         "imageId": id
     };
     fetch('/character', {
