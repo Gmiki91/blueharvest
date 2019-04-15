@@ -1,17 +1,39 @@
 package blueharvest.character;
 
+import java.time.LocalDate;
+
 public class Character {
     private long id;
     private String name;
     private String password;
     private long imageId;
+    private LocalDate lastVisit;
+    private int food;
 
 
-    public Character(long id, String name, String password, long imageId) {
+    public Character(long id, String name, String password, long imageId, LocalDate lastVisit, int food) {
         this.id = id;
         this.name = name;
         this.password=password;
         this.imageId=imageId;
+        this.lastVisit = lastVisit;
+        this.food=food;
+    }
+
+    public LocalDate getLastVisit() {
+        return lastVisit;
+    }
+
+    public void setLastVisit(LocalDate lastVisit) {
+        this.lastVisit = lastVisit;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public void setFood(int food) {
+        this.food = food;
     }
 
     public String getPassword() {

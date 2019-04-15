@@ -54,7 +54,7 @@ document.getElementById("pic").innerHTML = "";
             img.class="image";
             img.setAttribute('width','200');
             img.setAttribute('height','200');
-            img.src =  "data:image/jpg;base64," + jsonData.imageArray;
+            img.src =  "data:image/jpg;base64," + jsonData.imageArray;1
             document.getElementById("pic").appendChild(img)})
             if (id!=nrOfImages){
                 document.getElementById("next-pic").disabled=false;
