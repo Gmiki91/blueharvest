@@ -13,6 +13,7 @@ role varchar(255),
 image_id BIGINT,
 food TINYINT,
 last_visit DATE,
+status varchar(255),
 FOREIGN KEY (image_id) REFERENCES images(id)
 )
 engine=InnoDb character set = UTF8 collate = utf8_hungarian_ci;

@@ -9,15 +9,25 @@ public class Character {
     private long imageId;
     private LocalDate lastVisit;
     private int food;
+    private Status status;
 
 
-    public Character(long id, String name, String password, long imageId, LocalDate lastVisit, int food) {
+    public Character(long id, String name, String password, long imageId, LocalDate lastVisit, int food, Status status) {
         this.id = id;
         this.name = name;
         this.password=password;
         this.imageId=imageId;
         this.lastVisit = lastVisit;
         this.food=food;
+        this.status = status;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public LocalDate getLastVisit() {

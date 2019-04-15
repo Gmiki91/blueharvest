@@ -30,4 +30,6 @@ public class CharacterController {
             return null;
         }
     }
+    @PutMapping("/character")
+    public Character goHunting(){return null;}
 }

@@ -26,7 +26,8 @@ public class CharacterService {
                 hashedPassword,
                 character.getImageId(),
                 character.getLastVisit(),
-                character.getFood()));
+                character.getFood(),
+                character.getStatus()));
     }
 
     public Character getCharacterByName(String name) {

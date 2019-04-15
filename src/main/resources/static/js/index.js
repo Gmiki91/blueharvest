@@ -26,9 +26,11 @@ function fetchChar(){
 
             document.getElementById("cell1").innerHTML="Étel: "+jsonData.food;
 
-            var giveFood = document.createElement("button");
-            giveFood.innerHTML="Vadászat!";
-            document.getElementById("cell2").appendChild(giveFood);
+            var huntButton = document.createElement("button");
+            huntButton.innerHTML="Vadászat!";
+            huntButton.addEventListener("click",function(){
+                hunt(jsonData.id)})
+            document.getElementById("cell2").appendChild(huntButton);
          }
     })
 }
@@ -40,4 +42,7 @@ function getPic(img){
              .then(function (jsonData){
                  img.src = "data:image/jpg;base64," + jsonData.imageArray;
              });
+}
+function hunt(idOfChar){
+    console.log(idOfChar);
 }
