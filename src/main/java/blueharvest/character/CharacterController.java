@@ -31,5 +31,9 @@ public class CharacterController {
         }
     }
     @PutMapping("/character")
-    public Character goHunting(){return null;}
+    public void goHunting(@RequestParam long id){
+        Character character=characterService.getCharacterById(id);
+        character.setStatus(Status.HUNTING);
+        characterService.updateStatus(character);
+    }
 }

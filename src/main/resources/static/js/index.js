@@ -27,9 +27,16 @@ function fetchChar(){
             document.getElementById("cell1").innerHTML="Étel: "+jsonData.food;
 
             var huntButton = document.createElement("button");
-            huntButton.innerHTML="Vadászat!";
+            if (jsonData.status == "AVAILABLE"){
+                huntButton.innerHTML="Vadászat!";
+            }else if (jsonData.status == "HUNTING"){
+                huntButton.innerHTML="Szörnyed éppen vadászik."
+                huntButton.disabled = true;
+            }
             huntButton.addEventListener("click",function(){
-                hunt(jsonData.id)})
+                hunt(jsonData.id)});
+
+            document.getElementById("cell2").innerHTML="";
             document.getElementById("cell2").appendChild(huntButton);
          }
     })
@@ -44,5 +51,13 @@ function getPic(img){
              });
 }
 function hunt(idOfChar){
-    console.log(idOfChar);
+var request = {
+    "id" : idOfChar
+    };
+ fetch(`/character?id=${idOfChar}`, {
+        method: "PUT"
+    })
+    .then(function (){
+        fetchChar();
+    });
 }

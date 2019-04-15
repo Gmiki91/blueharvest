@@ -1,9 +1,11 @@
 package blueharvest.character;
 
+import blueharvest.actionInProgress.ActionDao;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -11,10 +13,12 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class CharacterService {
     private CharacterDao characterDao;
     private PasswordEncoder passwordEncoder;
+    private ActionDao actionDao;
 
-    public CharacterService(CharacterDao characterDao, PasswordEncoder passwordEncoder) {
+    public CharacterService(CharacterDao characterDao, PasswordEncoder passwordEncoder, ActionDao actionDao) {
         this.characterDao = characterDao;
         this.passwordEncoder = passwordEncoder;
+        this.actionDao = actionDao;
     }
 
     public void createCharacter(Character character) {
@@ -30,6 +34,10 @@ public class CharacterService {
                 character.getStatus()));
     }
 
+    public Character getCharacterById(long id){
+        return characterDao.getCharacterById(id);
+    }
+
     public Character getCharacterByName(String name) {
         Character character = characterDao.getCharacterByName(name);
         long daysPassed = DAYS.between(character.getLastVisit(), LocalDate.now());
@@ -40,14 +48,22 @@ public class CharacterService {
         character.setLastVisit(LocalDate.now());
         updateLastVisit(character);
 
+        if (character.getStatus().equals(Status.HUNTING)){
+        }
+
         return character;
     }
 
+
+    public void updateFood(Character character) {
+        characterDao.updateFood(character);
+    }
+    public void updateStatus(Character character){
+        actionDao.startAction(character);
+        characterDao.updateStatus(character);
+    }
     private void updateLastVisit(Character character) {
         characterDao.updateLastVisit(character);
     }
 
-    private void updateFood(Character character) {
-        characterDao.updateFood(character);
-    }
 }
