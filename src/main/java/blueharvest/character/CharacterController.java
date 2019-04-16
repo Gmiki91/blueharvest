@@ -23,7 +23,7 @@ public class CharacterController {
         return validator.getResponseStatus();
     }
     @GetMapping("/character")
-    public Character getCharacter(Authentication aut){
+    public CharacterInfo getCharacter(Authentication aut){
         if(aut != null){
            return characterService.getCharacterByName(aut.getName());
         } else {

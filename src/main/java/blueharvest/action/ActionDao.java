@@ -1,4 +1,4 @@
-package blueharvest.actionInProgress;
+package blueharvest.action;
 
 import blueharvest.character.Character;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,8 +22,11 @@ public class ActionDao {
                 character.getId(),character.getStatus().toString(),
                 Date.from(LocalDateTime.now().plusHours(character.getStatus().getHours()).toInstant(ZoneOffset.UTC)));
     }
-    public LocalDateTime getOngoingAction(Character character){
+    public LocalDateTime getEndTimeOfOngoingAction(Character character){
         return jdbcTemplate.queryForObject("Select end_time from actions where char_id = ?",
                 ((resultSet, i) -> resultSet.getTimestamp("end_time").toLocalDateTime()),character.getId());
+    }
+    public void removeAction(long id){
+        jdbcTemplate.update("DELETE from actions where char_id=?",id);
     }
 }
