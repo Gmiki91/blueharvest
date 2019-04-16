@@ -1,6 +1,11 @@
 package blueharvest.character;
 
+import blueharvest.skills.Skill;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Character {
     private long id;
@@ -11,6 +16,7 @@ public class Character {
     private int food;
     private int money;
     private Status status;
+    private List<Skill> skills = new ArrayList<>();
 
 
     public Character(long id, String name, String password, long imageId, LocalDate lastVisit, int food, int money, Status status) {
@@ -22,6 +28,13 @@ public class Character {
         this.food=food;
         this.money=money;
         this.status = status;
+    }
+
+    public void addSkill(Skill skill){
+        skills.add(skill);
+    }
+    public List<Skill> getSkills(){
+        return new ArrayList<>(skills);
     }
 
     public int getMoney() {

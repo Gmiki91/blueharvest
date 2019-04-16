@@ -5,6 +5,7 @@ details.style.display="none";
 
 window.onload=fetchChar;
 var imageId;
+var selectElement;
 
 function fetchChar(){
     fetch("/character")
@@ -31,17 +32,28 @@ function fetchChar(){
             document.getElementById("cell2").innerHTML=jsonData.character.money;
 
             var huntButton = document.createElement("button");
+            var learnButton = document.createElement("button");
+
+            document.getElementById("cell3").innerHTML="";
             if (jsonData.character.status == "AVAILABLE"){
-                huntButton.innerHTML="Vadászat!";
+                huntButton.innerHTML="Vadászat";
+                learnButton.innerHTML="Tanulj: ";
+                displaySkills();
+                document.getElementById("cell3").appendChild(huntButton);
+                document.getElementById("cell3").appendChild(learnButton);
+            }else if (jsonData.character.status == "LEARNING"){
+                learnButton.innerHTML = "Szörnyed éppen tanul.\n (Hátralévő idő: "+jsonData.remainingTime+" óra)";
+                learnButton.disabled = true;
+                document.getElementById("cell3").appendChild(learnButton);
             }else if (jsonData.character.status == "HUNTING"){
-                huntButton.innerHTML="Szörnyed éppen vadászik.\n (Hátralévő idő: "+jsonData.remainingTime+" óra)";
+                huntButton.innerHTML = "Szörnyed éppen vadászik.\n (Hátralévő idő: "+jsonData.remainingTime+" óra)";
                 huntButton.disabled = true;
+                document.getElementById("cell3").appendChild(huntButton);
             }
             huntButton.addEventListener("click",function(){
                 hunt(jsonData.character.id)});
-
-            document.getElementById("cell3").innerHTML="";
-            document.getElementById("cell3").appendChild(huntButton);
+            learnButton.addEventListener("click",function(){
+                learn(jsonData.character.id, selectElement.value)});
 
             if (jsonData.receivedFood!=-1){
                 displayActionResults(jsonData.receivedFood, jsonData.receivedMoney);
@@ -67,10 +79,40 @@ function hunt(idOfChar){
 var request = {
     "id" : idOfChar
     };
- fetch(`/character?id=${idOfChar}`, {
+ fetch(`/character/hunt?id=${idOfChar}`, {
         method: "PUT"
     })
     .then(function (){
         fetchChar();
+    });
+}
+function learn(idOfChar, idOfSkill){
+var request = {
+    "id" : idOfChar
+    };
+ fetch(`/character/learn?id=${idOfChar}&skillId=${idOfSkill}`, {
+        method: "PUT"
+    })
+    .then(function (){
+        fetchChar();
+    });
+}
+
+function displaySkills(){
+fetch("/skills")
+    .then(function (response) {
+          return response.json();
+    })
+    .then(function (jsonData) {
+    selectElement = document.createElement("select");
+        for (var i = 0; i < jsonData.length; i++) {
+            var moglichkeit = document.createElement("option");
+            moglichkeit.value=jsonData[i].id;
+            moglichkeit.innerHTML=jsonData[i].name;
+            selectElement.appendChild(moglichkeit);
+
+        }
+        console.log(selectElement);
+        document.getElementById("cell3").appendChild(selectElement);
     });
 }
