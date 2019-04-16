@@ -52,7 +52,7 @@ function fetchChar(){
 function displayActionResults(food, money){
     details.style.display="block";
     var resultP=document.getElementById("results");
-    resultP.innerHTML=`Szörnyed visszatért küldetéséről. Zsákmánya: ${food} élelem és ${money} rémgomb!`
+    resultP.innerHTML=`Szörnyed visszatért a vadászatról. Zsákmánya: ${food} élelem és ${money} rémgomb!`
 }
 function getPic(img){
     fetch(`/image/${imageId}`)

@@ -1,7 +1,7 @@
 package blueharvest.character;
 
 public enum Status {
-    AVAILABLE(0), HUNTING(2), DEAD(0);
+    AVAILABLE(0), HUNTING(5), DEAD(0);
 
     long hours;
 

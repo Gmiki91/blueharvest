@@ -35,22 +35,23 @@ public class CharacterDao {
         return jdbcTemplate.queryForObject("SELECT id, name, password, image_id, last_visit, food, money, status from characters where name = ?",
                 CHARACTER_ROW_MAPPER, name);
     }
-    public Character getCharacterById(long id) {
-        return jdbcTemplate.queryForObject("SELECT id, name, password, image_id, last_visit, food, money, status from characters where id = ?",
-                CHARACTER_ROW_MAPPER, id);
-    }
 
-    public void updateLastVisit(Character character) {
+    public void updateLastVisit(long id, LocalDate lastVisit) {
         jdbcTemplate.update("UPDATE characters set last_visit=? where id = ?",
-                Date.valueOf(character.getLastVisit()),character.getId());
+                Date.valueOf(lastVisit),id);
     }
 
-    public void updateFood(Character character) {
+    public void updateFood(long id, int food) {
         jdbcTemplate.update("UPDATE characters set food=? where id = ?",
-                character.getFood(),character.getId());
+                food,id);
     }
-    public void updateStatus(Character character){
+    public void updateMoney(long id, int money) {
+        jdbcTemplate.update("UPDATE characters set money=? where id = ?",
+                money,id);
+    }
+
+    public void updateStatus(long id, Status status){
         jdbcTemplate.update("UPDATE characters set status=? where id = ?",
-                character.getStatus().toString(),character.getId());
+                status.toString(),id);
     }
 }

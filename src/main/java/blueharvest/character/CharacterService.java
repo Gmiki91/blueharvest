@@ -40,45 +40,47 @@ public class CharacterService {
 
     public CharacterInfo getCharacterByName(String name) {
         Character character = characterDao.getCharacterByName(name);
-        long daysPassed = DAYS.between(character.getLastVisit(), LocalDate.now());
+        checkIfDayHasPassed(character);
+
         int receivedFood = -1;
         int receivedMoney = -1;
         long remainingTime = 0;
 
-        character.setFood(character.getFood() - ((int) daysPassed - 1));
-        updateFood(character);
-
-        character.setLastVisit(LocalDate.now());
-        updateLastVisit(character);
         if (character.getStatus().equals(Status.HUNTING)){
-            remainingTime = Duration.between(LocalDateTime.now(),actionDao.getEndTimeOfOngoingAction(character)).minusHours(1L).toHours();
+            remainingTime = Duration.between(LocalDateTime.now(),
+                    actionDao.getEndTimeOfOngoingAction(character)).minusHours(1L).toMinutes();
+
             if (actionDao.getEndTimeOfOngoingAction(character).minusHours(2L).isBefore(LocalDateTime.now())) {
                 receivedFood = new ActionResult(character.getStatus().name()).receivedFood();
                 receivedMoney = new ActionResult(character.getStatus().name()).receivedMoney();
-                character.setStatus(Status.AVAILABLE);
-                character.setFood(character.getFood()+receivedFood);
-                character.setMoney(character.getMoney()+receivedMoney);
+
+                characterDao.updateStatus(character.getId(), Status.AVAILABLE);
+                updateFood(character.getId(),character.getFood()+receivedFood);
+                updateMoney(character.getId(),character.getMoney()+receivedMoney);
                 actionDao.removeAction(character.getId());
             }
         }
-        return new CharacterInfo(character,receivedFood,receivedMoney, remainingTime);
+        Character updatedCharacter = characterDao.getCharacterByName(name);
+        return new CharacterInfo(updatedCharacter,receivedFood,receivedMoney, remainingTime);
     }
 
-    public Character getCharacterById(long id) {
-        return characterDao.getCharacterById(id);
+    public void updateFood(long id, int food) {
+        characterDao.updateFood(id,food);
     }
 
-    public void updateFood(Character character) {
-        characterDao.updateFood(character);
+    public void updateStatus(long id, Status status) {
+        actionDao.startAction(id,status);
+        characterDao.updateStatus(id,status);
     }
-
-    public void updateStatus(Character character) {
-        actionDao.startAction(character);
-        characterDao.updateStatus(character);
+    public void updateMoney(long id, int money){
+        characterDao.updateMoney(id, money);
     }
-
-    private void updateLastVisit(Character character) {
-        characterDao.updateLastVisit(character);
+    private void updateLastVisit(long id, LocalDate lastVisit) {
+        characterDao.updateLastVisit(id,lastVisit);
     }
-
+    private void checkIfDayHasPassed(Character character){
+        long daysPassed = DAYS.between(character.getLastVisit(), LocalDate.now());
+        updateFood(character.getId(), character.getFood()- ((int) daysPassed - 1));
+        updateLastVisit(character.getId(), LocalDate.now());
+    }
 }

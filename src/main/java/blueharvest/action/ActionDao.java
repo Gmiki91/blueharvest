@@ -1,6 +1,7 @@
 package blueharvest.action;
 
 import blueharvest.character.Character;
+import blueharvest.character.Status;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -17,10 +18,10 @@ public class ActionDao {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void startAction(Character character){
+    public void startAction(long id, Status status){
         jdbcTemplate.update("Insert into actions(char_id,tatigkeit,end_time) values (?,?,?)",
-                character.getId(),character.getStatus().toString(),
-                Date.from(LocalDateTime.now().plusHours(character.getStatus().getHours()).toInstant(ZoneOffset.UTC)));
+                id,status.toString(),
+                Date.from(LocalDateTime.now().plusMinutes(status.getHours()).toInstant(ZoneOffset.UTC)));
     }
     public LocalDateTime getEndTimeOfOngoingAction(Character character){
         return jdbcTemplate.queryForObject("Select end_time from actions where char_id = ?",
