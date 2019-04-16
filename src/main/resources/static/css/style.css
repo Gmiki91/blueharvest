@@ -22,7 +22,8 @@ table.cinereousTable td, table.cinereousTable th {
   padding: 4px 4px;
 }
 table.cinereousTable tbody td {
-  font-size: 13px;
+  font-size: 24px;
+  font-weight: bold;
 }
 table.cinereousTable thead {
   background: #948473;

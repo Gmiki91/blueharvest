@@ -31,37 +31,42 @@ public class CharacterService {
                 character.getImageId(),
                 character.getLastVisit(),
                 character.getFood(),
+                character.getMoney(),
                 character.getStatus()));
-    }
-
-    public Character getCharacterById(long id){
-        return characterDao.getCharacterById(id);
     }
 
     public Character getCharacterByName(String name) {
         Character character = characterDao.getCharacterByName(name);
         long daysPassed = DAYS.between(character.getLastVisit(), LocalDate.now());
 
-        character.setFood(character.getFood() - ((int) daysPassed-1));
+        character.setFood(character.getFood() - ((int) daysPassed - 1));
         updateFood(character);
 
         character.setLastVisit(LocalDate.now());
         updateLastVisit(character);
 
-        if (character.getStatus().equals(Status.HUNTING)){
+        if (character.getStatus().equals(Status.HUNTING) &&
+                actionDao.getOngoingAction(character).isBefore(LocalDateTime.now())) {
+            character.setStatus(Status.AVAILABLE);
+            character.setFood(character.getFood() + 1);
         }
 
         return character;
     }
 
+    public Character getCharacterById(long id) {
+        return characterDao.getCharacterById(id);
+    }
 
     public void updateFood(Character character) {
         characterDao.updateFood(character);
     }
-    public void updateStatus(Character character){
+
+    public void updateStatus(Character character) {
         actionDao.startAction(character);
         characterDao.updateStatus(character);
     }
+
     private void updateLastVisit(Character character) {
         characterDao.updateLastVisit(character);
     }

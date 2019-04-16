@@ -24,7 +24,8 @@ function fetchChar(){
             img.setAttribute('width','200');
             img.setAttribute('height','200');
 
-            document.getElementById("cell1").innerHTML="Étel: "+jsonData.food;
+            document.getElementById("cell1").innerHTML=jsonData.food;
+            document.getElementById("cell2").innerHTML=jsonData.money;
 
             var huntButton = document.createElement("button");
             if (jsonData.status == "AVAILABLE"){
@@ -36,8 +37,8 @@ function fetchChar(){
             huntButton.addEventListener("click",function(){
                 hunt(jsonData.id)});
 
-            document.getElementById("cell2").innerHTML="";
-            document.getElementById("cell2").appendChild(huntButton);
+            document.getElementById("cell3").innerHTML="";
+            document.getElementById("cell3").appendChild(huntButton);
          }
     })
 }

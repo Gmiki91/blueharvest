@@ -9,17 +9,27 @@ public class Character {
     private long imageId;
     private LocalDate lastVisit;
     private int food;
+    private int money;
     private Status status;
 
 
-    public Character(long id, String name, String password, long imageId, LocalDate lastVisit, int food, Status status) {
+    public Character(long id, String name, String password, long imageId, LocalDate lastVisit, int food, int money, Status status) {
         this.id = id;
         this.name = name;
         this.password=password;
         this.imageId=imageId;
         this.lastVisit = lastVisit;
         this.food=food;
+        this.money=money;
         this.status = status;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     public Status getStatus() {

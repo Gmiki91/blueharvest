@@ -12,6 +12,7 @@ enabled int,
 role varchar(255),
 image_id BIGINT,
 food TINYINT,
+money MEDIUMINT,
 last_visit DATE,
 status varchar(255),
 FOREIGN KEY (image_id) REFERENCES images(id)
