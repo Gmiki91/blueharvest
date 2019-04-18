@@ -8,15 +8,15 @@ public class ActionResult {
     }
 
     public int receivedFood(){
-        if (act.equals("HUNTING")){
-            return 5;
+        if (act.equals("Vadászat")){
+            return 2;
         }
         return 1;
     }
     public int receivedMoney(){
-        if (act.equals("HUNTING")){
-            return 5;
+        if (act.equals("Vadászat")){
+            return 1;
         }
-        return 1;
+        return 0;
     }
 }

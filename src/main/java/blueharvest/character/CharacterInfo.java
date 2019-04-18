@@ -5,12 +5,26 @@ public class CharacterInfo {
     private int receivedFood;
     private int receivedMoney;
     private long remainingTime;
+    private String nameOfSkillLearned;
 
-    public CharacterInfo(Character character, int receivedFood, int receivedMoney, long remainingTime) {
+    public CharacterInfo(Character character, int receivedFood, int receivedMoney, long remainingTime, String nameOfSkillLearned ) {
         this.character = character;
         this.receivedFood = receivedFood;
         this.receivedMoney = receivedMoney;
         this.remainingTime=remainingTime;
+        this.nameOfSkillLearned=nameOfSkillLearned;
+    }
+
+    public void setRemainingTime(long remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    public String getNameOfSkillLearned() {
+        return nameOfSkillLearned;
+    }
+
+    public void setNameOfSkillLearned(String nameOfSkillLearned) {
+        this.nameOfSkillLearned = nameOfSkillLearned;
     }
 
     public long getRemainingTime() {

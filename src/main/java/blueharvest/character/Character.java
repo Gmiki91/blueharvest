@@ -3,9 +3,7 @@ package blueharvest.character;
 import blueharvest.skills.Skill;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Character {
     private long id;
@@ -16,7 +14,7 @@ public class Character {
     private int food;
     private int money;
     private Status status;
-    private List<Skill> skills = new ArrayList<>();
+    private Set<Skill> skills = new HashSet<>();
 
 
     public Character(long id, String name, String password, long imageId, LocalDate lastVisit, int food, int money, Status status) {
@@ -33,8 +31,8 @@ public class Character {
     public void addSkill(Skill skill){
         skills.add(skill);
     }
-    public List<Skill> getSkills(){
-        return new ArrayList<>(skills);
+    public Set<Skill> getSkills(){
+        return new HashSet<>(skills);
     }
 
     public int getMoney() {

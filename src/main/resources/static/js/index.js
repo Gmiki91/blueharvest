@@ -5,7 +5,8 @@ details.style.display="none";
 
 window.onload=fetchChar;
 var imageId;
-var selectElement;
+var selectLearnable = document.createElement("select");;
+var selectDoable = document.createElement("select");;
 
 function fetchChar(){
     fetch("/character")
@@ -19,7 +20,8 @@ function fetchChar(){
             logkibe.href = "/logout";
 
             userInfo.style.display="block";
-
+            details.style.display="block";
+            displaySkillsLearned(jsonData.character.id);
             document.getElementById("column-name").innerHTML=jsonData.character.name;
 
             imageId = jsonData.character.imageId;
@@ -31,40 +33,47 @@ function fetchChar(){
             document.getElementById("cell1").innerHTML=jsonData.character.food;
             document.getElementById("cell2").innerHTML=jsonData.character.money;
 
-            var huntButton = document.createElement("button");
+            var actionButton = document.createElement("button");
             var learnButton = document.createElement("button");
 
             document.getElementById("cell3").innerHTML="";
             if (jsonData.character.status == "AVAILABLE"){
-                huntButton.innerHTML="Vadászat";
+                actionButton.innerHTML="Csináld: ";
                 learnButton.innerHTML="Tanulj: ";
-                displaySkills();
-                document.getElementById("cell3").appendChild(huntButton);
                 document.getElementById("cell3").appendChild(learnButton);
+                document.getElementById("cell3").appendChild(selectLearnable);
+                displaySkillsToLearn(jsonData.character.id);
+                document.getElementById("cell3").appendChild(actionButton);
+                document.getElementById("cell3").appendChild(selectDoable);
+                displaySkillsToDo(jsonData.character.id);
             }else if (jsonData.character.status == "LEARNING"){
-                learnButton.innerHTML = "Szörnyed éppen tanul.\n (Hátralévő idő: "+jsonData.remainingTime+" óra)";
+                learnButton.innerHTML = "Szörnyed éppen a következőt tanulja: "+jsonData.nameOfSkillLearned+".\n (Hátralévő idő: "+jsonData.remainingTime+" óra)";
                 learnButton.disabled = true;
                 document.getElementById("cell3").appendChild(learnButton);
-            }else if (jsonData.character.status == "HUNTING"){
-                huntButton.innerHTML = "Szörnyed éppen vadászik.\n (Hátralévő idő: "+jsonData.remainingTime+" óra)";
-                huntButton.disabled = true;
-                document.getElementById("cell3").appendChild(huntButton);
+            }else if (jsonData.character.status == "INACTION"){
+            console.log(jsonData);
+                actionButton.innerHTML = "Szörnyed éppen a következő tevékenységgel foglalatoskodik: "+jsonData.nameOfSkillLearned+".\n (Hátralévő idő: "+jsonData.remainingTime+" óra)";
+                actionButton.disabled = true;
+                document.getElementById("cell3").appendChild(actionButton);
             }
-            huntButton.addEventListener("click",function(){
-                hunt(jsonData.character.id)});
+            actionButton.addEventListener("click",function(){
+                hunt(jsonData.character.id, selectDoable.value)});
             learnButton.addEventListener("click",function(){
-                learn(jsonData.character.id, selectElement.value)});
+                learn(jsonData.character.id, selectLearnable.value)});
 
-            if (jsonData.receivedFood!=-1){
-                displayActionResults(jsonData.receivedFood, jsonData.receivedMoney);
+            if (jsonData.remainingTime===-1){
+                displayActionResults(jsonData.receivedFood, jsonData.receivedMoney, jsonData.nameOfSkillLearned);
             }
          }
     })
 }
-function displayActionResults(food, money){
-    details.style.display="block";
+function displayActionResults(food, money, skill){
     var resultP=document.getElementById("results");
-    resultP.innerHTML=`Szörnyed visszatért a vadászatról. Zsákmánya: ${food} élelem és ${money} rémgomb!`
+    if (food!==-1){
+        resultP.innerHTML=`Szörnyed egy kiadós ${skill}-n van túl. Zsákmánya: ${food} élelem és ${money} rémgomb!`;
+    }else{
+        resultP.innerHTML=`Szörnyed elsajátította a ${skill} művészetét!`;
+    }
 }
 function getPic(img){
     fetch(`/image/${imageId}`)
@@ -75,11 +84,11 @@ function getPic(img){
                  img.src = "data:image/jpg;base64," + jsonData.imageArray;
              });
 }
-function hunt(idOfChar){
+function hunt(idOfChar, idOfSkill){
 var request = {
     "id" : idOfChar
     };
- fetch(`/character/hunt?id=${idOfChar}`, {
+ fetch(`/character/hunt?id=${idOfChar}&skillId=${idOfSkill}`, {
         method: "PUT"
     })
     .then(function (){
@@ -98,21 +107,57 @@ var request = {
     });
 }
 
-function displaySkills(){
-fetch("/skills")
+function displaySkillsToLearn(id){
+selectLearnable.innerHTML="";
+fetch(`/skills/tolearn?id=${id}`)
     .then(function (response) {
           return response.json();
     })
     .then(function (jsonData) {
-    selectElement = document.createElement("select");
         for (var i = 0; i < jsonData.length; i++) {
             var moglichkeit = document.createElement("option");
             moglichkeit.value=jsonData[i].id;
             moglichkeit.innerHTML=jsonData[i].name;
-            selectElement.appendChild(moglichkeit);
+            selectLearnable.appendChild(moglichkeit);
 
         }
-        console.log(selectElement);
-        document.getElementById("cell3").appendChild(selectElement);
     });
+}
+function displaySkillsToDo(id){
+selectDoable.innerHTML="";
+fetch(`/skills/todo?id=${id}`)
+    .then(function (response) {
+          return response.json();
+    })
+    .then(function (jsonData) {
+        for (var i = 0; i < jsonData.length; i++) {
+            var moglichkeit = document.createElement("option");
+            moglichkeit.value=jsonData[i].id;
+            moglichkeit.innerHTML=jsonData[i].name;
+            selectDoable.appendChild(moglichkeit);
+        }
+    });
+}
+
+function displaySkillsLearned(id){
+    var introText = "";
+    fetch(`/skills/learned?id=${id}`)
+        .then(function (response) {
+              return response.json();
+        })
+        .then(function (jsonData) {
+            if(jsonData.length===0){
+                introText="Szörnyed még semmit sem tud.";
+                document.getElementById("skills").innerHTML=introText;
+            }else{
+                introText="Szörnyed az alábbi művészetekben jeleskedik: \n\n";
+                document.getElementById("skills").innerHTML=introText;
+                for (var i = 0; i < jsonData.length; i++) {
+                    document.getElementById("skills").innerHTML+=jsonData[i].name;
+                    document.getElementById("skills").innerHTML+="\n";
+                    document.getElementById("skills").innerHTML+=jsonData[i].description;
+                    document.getElementById("skills").innerHTML+="\n";
+                }
+            }
+        });
 }

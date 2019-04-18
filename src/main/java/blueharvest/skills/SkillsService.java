@@ -11,7 +11,16 @@ public class SkillsService {
     public SkillsService(SkillsDao skillsDao) {
         this.skillsDao = skillsDao;
     }
-    public List<Skill> getSkills(){
-        return skillsDao.getSkills();
+
+    public List<Skill> getSkillsToLearn(long id) {
+        return skillsDao.getSkillsToLearn(id);
+    }
+
+    public List<Skill> getSkillsLearned(long id) {
+        return skillsDao.getSkillsLearned(id);
+    }
+
+    public List<Skill> getSkillsToDo(long id) {
+        return skillsDao.getActiveSkillsLearned(id);
     }
 }

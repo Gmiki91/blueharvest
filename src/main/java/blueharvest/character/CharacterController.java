@@ -31,12 +31,14 @@ public class CharacterController {
         }
     }
     @PutMapping("/character/hunt")
-    public void hunt(@RequestParam long id){
-        characterService.updateStatus(id,Status.HUNTING);
+    public void hunt(@RequestParam long id, @RequestParam long skillId){
+        characterService.updateStatus(id,Status.INACTION);
+        characterService.startAction(id, skillId);
     }
 
     @PutMapping("/character/learn")
     public void learn(@RequestParam long id, @RequestParam long skillId){
-        characterService.updateStatus(id,skillId);
+        characterService.updateStatus(id,Status.LEARNING);
+        characterService.startLearning(id,skillId);
     }
 }
