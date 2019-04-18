@@ -60,11 +60,11 @@ public class CharacterService {
             nameOfSkill = skillsDao.getSkillById(actionDao.getSkillIdOfOngoingAction(character.getId())).getName();
             if (actionDao.getEndTimeOfOngoingAction(character).minusHours(2L).isBefore(LocalDateTime.now())) {
                 remainingTime=-1;
+                characterDao.updateStatus(character.getId(), Status.AVAILABLE);
                 if (character.getStatus().equals(Status.INACTION)) {
                     receivedFood = new ActionResult(nameOfSkill).receivedFood();
                     receivedMoney = new ActionResult(nameOfSkill).receivedMoney();
 
-                    characterDao.updateStatus(character.getId(), Status.AVAILABLE);
                     updateFood(character.getId(), character.getFood() + receivedFood);
                     updateMoney(character.getId(), character.getMoney() + receivedMoney);
                 } else if (character.getStatus().equals(Status.LEARNING)){
