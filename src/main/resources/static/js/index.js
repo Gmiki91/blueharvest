@@ -51,7 +51,6 @@ function fetchChar(){
                 learnButton.disabled = true;
                 document.getElementById("cell3").appendChild(learnButton);
             }else if (jsonData.character.status == "INACTION"){
-            console.log(jsonData);
                 actionButton.innerHTML = "Szörnyed éppen a következő tevékenységgel foglalatoskodik: "+jsonData.nameOfSkillLearned+".\n (Hátralévő idő: "+jsonData.remainingTime+" óra)";
                 actionButton.disabled = true;
                 document.getElementById("cell3").appendChild(actionButton);
@@ -150,13 +149,13 @@ function displaySkillsLearned(id){
                 introText="Szörnyed még semmit sem tud.";
                 document.getElementById("skills").innerHTML=introText;
             }else{
-                introText="Szörnyed az alábbi művészetekben jeleskedik: \n\n";
+                introText="Szörnyed az alábbi tevékenységekben jeleskedik: \n\n\n";
                 document.getElementById("skills").innerHTML=introText;
                 for (var i = 0; i < jsonData.length; i++) {
                     document.getElementById("skills").innerHTML+=jsonData[i].name;
                     document.getElementById("skills").innerHTML+="\n";
                     document.getElementById("skills").innerHTML+=jsonData[i].description;
-                    document.getElementById("skills").innerHTML+="\n";
+                    document.getElementById("skills").innerHTML+="\n\n";
                 }
             }
         });
