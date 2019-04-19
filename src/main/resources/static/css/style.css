@@ -50,4 +50,8 @@ table.cinereousTable thead th {
 table.cinereousTable thead th:first-child {
   border-left: none;
 }
-
+body {
+      background: url(background.png);
+      background-repeat: no-repeat;
+background-size:100%;
+      }
