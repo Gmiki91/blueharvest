@@ -4,6 +4,8 @@
  float:left;
 }
 .details {
+ text-shadow: 5px 2px 1px #7ACE3E;
+ font-size: 16px;
  float:left;
  padding-left:150px;
  padding-top:100px;

@@ -21,36 +21,30 @@
 </div>
 <br>
 <br>
-<div id="user-info">
-    <img id="image">
-    <table class="cinereousTable">
-        <thead>
+<table class="cinereousTable">
+    <tbody>
         <tr>
-            <th id="column-name"colspan="2"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td title="Étel" width="10%"><img src="img/meat.png"></td>
-            <td id="cell1" ></td>
-        </tr>
-        <tr>
-            <td title="Rémgomb" width="10%"><img src="img/gomb.png"></td>
-            <td  id="cell2"></td>
-        </tr>
-        <tr>
-            <td id="cell3" colspan="2">
+            <td id="write">
+                <button id="writeBtn">Új üzenet</button>
             </td>
         </tr>
-        </tbody>
-    </table>
+        <tr>
+            <td id="read">
+                <button id="readBtn">Olvasd el az üzeneteid</button>
+            </td>
+        </tr>
+</table>
+<div id="myModal" class="modal">
+<div class="modal-content">
+    <label for="to-char">Címzett:</label><input id="to-char"><br>
+    <label for="subject">Tárgy:</label><input id="subject"><br>
+    <label for="content">Szöveg:</label><br>
+    <input id="content"><br>
+    <button id="send-message">Üzenet küldése</button>
+    <span class="close">&times;</span>
 </div>
-<div class="details">
-    <label>Szörny infók:</label>
-    <pre id="results"></pre>
-    <pre id="skills"></pre>
 </div>
-<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-<script src="js/index.js"></script>
+<script src="js/mailbox.js"></script>
 </body>
+
 </html>
