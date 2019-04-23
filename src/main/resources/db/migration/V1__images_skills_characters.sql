@@ -16,7 +16,7 @@ engine=InnoDb character set = UTF8 collate = utf8_hungarian_ci;
 
 CREATE TABLE Characters (
 id BIGINT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(255),
+name VARCHAR(255) UNIQUE,
 password varchar(255),
 enabled int,
 role varchar(255),

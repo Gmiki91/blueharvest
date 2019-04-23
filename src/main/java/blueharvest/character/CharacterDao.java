@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public class CharacterDao {
@@ -29,6 +30,10 @@ public class CharacterDao {
         jdbcTemplate.update("INSERT into characters (name,password,enabled,role,image_id,last_visit,food,money,status) values(?,?,?,?,?,?,?,?,?)",
                 character.getName(), character.getPassword(), 1, "ROLE_USER", character.getImageId(),
                 Date.valueOf(LocalDate.now()), 3,0, Status.AVAILABLE.toString());
+    }
+    public List<Character> getAllCharacters(long id){
+        return jdbcTemplate.query("SELECT id,name,password,image_id,last_visit,food,money,status from characters where id!=?",
+                CHARACTER_ROW_MAPPER,id);
     }
 
     public Character getCharacterByName(String name) {

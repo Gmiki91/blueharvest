@@ -78,6 +78,9 @@ public class CharacterService {
         Character updatedCharacter = characterDao.getCharacterByName(name);
         return new CharacterInfo(updatedCharacter, receivedFood, receivedMoney, remainingTime, nameOfSkill);
     }
+    public List<Character>getAllCharacters(long id){
+        return characterDao.getAllCharacters(id);
+    }
 
     public void startAction(long id, long skillId){
         actionDao.startAction(id,skillId, skillsDao.getSkillById(skillId).getTimeToExecute());

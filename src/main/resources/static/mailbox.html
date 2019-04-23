@@ -12,38 +12,51 @@
 </head>
 <body>
 <div id='cssmenu'>
-    <ul>
-        <li><a href="login.html" id="login"><span>Belépés</span></a></li>
-        <li><a href='register.html'><span>Regisztráció</span></a></li>
-        <li><a href='mailbox.html'><span>Postaláda</span></a></li>
-        <li class='last'><a href='#'><span>Semmi</span></a></li>
-    </ul>
 </div>
 <br>
 <br>
-<table class="cinereousTable">
-    <tbody>
-        <tr>
-            <td id="write">
-                <button id="writeBtn">Új üzenet</button>
-            </td>
-        </tr>
-        <tr>
-            <td id="read">
-                <button id="readBtn">Olvasd el az üzeneteid</button>
-            </td>
-        </tr>
-</table>
-<div id="myModal" class="modal">
-<div class="modal-content">
-    <label for="to-char">Címzett:</label><input id="to-char"><br>
-    <label for="subject">Tárgy:</label><input id="subject"><br>
-    <label for="content">Szöveg:</label><br>
-    <input id="content"><br>
-    <button id="send-message">Üzenet küldése</button>
-    <span class="close">&times;</span>
+<div class="container">
+    <div class="mailbox-menu">
+    <table class="cinereousTable">
+        <tbody>
+            <tr>
+                <td id="write">
+                    <button id="writeBtn">Új üzenet</button>
+                </td>
+            </tr>
+            <tr>
+                <td id="inbox">
+                    <button id="inboxBtn">Bejövő üzenetek</button>
+                </td>
+            </tr>
+            <tr>
+                <td id="outbox">
+                    <button id="outboxBtn">Elküldött üzenetek</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="mails">
+    <table class="cinereousTable">
+        <tbody id="mails-tbody">
+            <tr><td>Válassz a bal oldali menüből!</td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <label for="to-char">Címzett:</label><input id="to-char"><br>
+            <label for="subject">Tárgy:  </label><input id="subject"><br>
+            <label for="content">Szöveg:</label><br>
+            <textarea id="content" rows="10" cols="70"></textarea><br>
+            <button id="send-message">Üzenet küldése</button>
+            <span class="close">&times;</span>
+        </div>
+    </div>
 </div>
-</div>
+<script src="js/user.js"></script>
 <script src="js/mailbox.js"></script>
 </body>
 

@@ -5,6 +5,8 @@ import blueharvest.validation.ValidationStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class CharacterController {
     private CharacterService characterService;
@@ -27,8 +29,12 @@ public class CharacterController {
         if(aut != null){
            return characterService.getCharacterByName(aut.getName());
         } else {
-            return null;
+            return new CharacterInfo();
         }
+    }
+    @GetMapping("/character/neighbours")
+    public List<Character> getAllCharacters(@RequestParam long id){
+       return characterService.getAllCharacters(id);
     }
     @PutMapping("/character/hunt")
     public void hunt(@RequestParam long id, @RequestParam long skillId){

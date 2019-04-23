@@ -13,6 +13,16 @@
 #image{
  display: inline-block;
  }
+.mailbox-menu {
+  margin: auto;
+  width: 15%;
+  float: left;
+ }
+.mails {
+  margin: auto;
+  width: 66%;
+  display: inline-block;
+}
 .nav{
  margin: auto;
  width: 100%;

@@ -9,19 +9,23 @@ import java.util.List;
 
 @RestController
 public class MessageController {
-    private MessageDao messageDao;
+    private MessageService messageService;
 
-    public MessageController(MessageDao messageDao) {
-        this.messageDao = messageDao;
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
     }
 
     @PostMapping("message/new")
     public void writeMessage(@RequestBody Message message){
-        messageDao.addMessage(message);
+        messageService.addMessage(message);
     }
 
     @GetMapping("message/inbox")
-    public List<Message> getMessages(long id){
-        return messageDao.getMessages(id);
+    public List<Message> getInboxMessages(String toName){
+        return messageService.getInboxMessages(toName);
+    }
+    @GetMapping("message/outbox")
+    public List<Message> getOutboxMessages(String fromName){
+        return messageService.getOutboxMessages(fromName);
     }
 }

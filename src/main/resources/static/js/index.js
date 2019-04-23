@@ -14,10 +14,7 @@ function fetchChar(){
           return response.json();
     })
     .then(function (jsonData) {
-         if (jsonData!=null){
-            var logkibe = document.getElementById("login");
-            logkibe.innerHTML = "Kijelentkezés";
-            logkibe.href = "/logout";
+         if (jsonData.character!==null){
 
             userInfo.style.display="block";
             details.style.display="block";

@@ -1,31 +1,43 @@
 package blueharvest.message;
 
+import java.time.LocalDateTime;
+
 public class Message {
-    private long to;
-    private long from;
+    private String to;
+    private String from;
     private String subject;
     private String content;
+    private LocalDateTime timeSent;
 
-    public Message(long to, long from, String subject, String content) {
+    public Message(String from, String to, String subject, String content, LocalDateTime timeSent) {
         this.to = to;
         this.from = from;
         this.subject = subject;
         this.content = content;
+        this.timeSent=timeSent;
     }
 
-    public long getTo() {
+    public LocalDateTime getTimeSent() {
+        return timeSent;
+    }
+
+    public void setTimeSent(LocalDateTime timeSent) {
+        this.timeSent = timeSent;
+    }
+
+    public String getTo() {
         return to;
     }
 
-    public void setTo(long to) {
+    public void setTo(String to) {
         this.to = to;
     }
 
-    public long getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(long from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
@@ -44,4 +56,5 @@ public class Message {
     public void setContent(String content) {
         this.content = content;
     }
+
 }

@@ -14,6 +14,7 @@ public class CharacterInfo {
         this.remainingTime=remainingTime;
         this.nameOfSkillLearned=nameOfSkillLearned;
     }
+    public CharacterInfo(){}
 
     public void setRemainingTime(long remainingTime) {
         this.remainingTime = remainingTime;
