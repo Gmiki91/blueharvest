@@ -1,6 +1,7 @@
-fetchNeigbours();
+var charId;
+fetchChar();
 function fetchNeigbours(){
-    fetch(`/character/neighbours?id=1`)
+    fetch(`/character/neighbours?id=${charId}`)
      .then(function (response) {
                   return response.json();
          })
@@ -8,19 +9,22 @@ function fetchNeigbours(){
             var userInfoDiv = document.getElementById("user-info");
             for (var i = 0; i < jsonData.length; i++) {
                 var image = document.createElement("img");
+                image.setAttribute('width','200');
+                image.setAttribute('height','200');
                 image.id = "image";
                 var table = document.createElement("table");
-                table.class = "cinereousTable";
-                var imageId = jsonData.imageId;
+                table.setAttribute('class','cinereousTable');
+                var imageId = jsonData[i].imageId;
                 getPic(image, imageId);
-                table.innerHtml = ` <thead>
+                table.innerHTML = ` <tbody>
                                            <tr>
-                                               <th>${jsonData.name}</th>
+                                               <th>${jsonData[i].name}</th>
                                             </tr>
-                                     </thead>
+                                     </tbody>
                                      `
                 userInfoDiv.appendChild(image);
                 userInfoDiv.appendChild(table);
+                userInfoDiv.appendChild(document.createElement("br"))
             }
          });
 }
@@ -34,3 +38,16 @@ function getPic(img, imageId){
                  img.src = "data:image/jpg;base64," + jsonData.imageArray;
              });
 }
+function fetchChar(){
+    fetch("/character")
+    .then(function (response) {
+          return response.json();
+    })
+    .then(function (jsonData) {
+    var navmenu = document.getElementById("cssmenu");
+    if (jsonData.character!== null){
+       charId = jsonData.character.id;
+       fetchNeigbours();
+       }
+       });
+       }

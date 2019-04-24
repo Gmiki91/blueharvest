@@ -16,7 +16,7 @@ public class MessageDao {
             resultSet.getString("to_name"),
             resultSet.getString("subject"),
             resultSet.getString("content"),
-            resultSet.getTimestamp("sending_time").toLocalDateTime().plusHours(2));
+            resultSet.getTimestamp("sending_time").toLocalDateTime());
 
     public MessageDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);

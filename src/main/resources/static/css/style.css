@@ -64,6 +64,5 @@ table.cinereousTable thead th:first-child {
 }
 body {
       background: url(background.png);
-      background-repeat: no-repeat;
-background-size:100%;
-      }
+      background-size: cover;
+}

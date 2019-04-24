@@ -11,7 +11,6 @@ function fetchChar(){
     if (jsonData.character!== null){
        charName = jsonData.character.name;
        charId = jsonData.character.id;
-       console.log(charId);
        navmenu.innerHTML = `<ul>
                                 <li><a href="/logout" id="login"><span>Kijelentkezés</span></a></li>
                                 <li><a href='mailbox.html'><span>Postaláda</span></a></li>
