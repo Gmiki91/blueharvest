@@ -5,16 +5,26 @@ public class Item {
     private String name;
     private String description;
     private int price;
+    private int qty;
     private Type type;
     private long imageId;
 
-    public Item(long id, String name, String description, int price, Type type, long imageId) {
+    public Item(long id, String name, String description, int price,int qty, Type type, long imageId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.qty=qty;
         this.type = type;
         this.imageId = imageId;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 
     public long getId() {

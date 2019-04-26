@@ -12,6 +12,8 @@
 }
 #image{
  display: inline-block;
+ margin-left: auto;
+ margin-right: auto;
  }
 .mailbox-menu {
   margin: auto;
@@ -65,4 +67,10 @@ table.cinereousTable thead th:first-child {
 body {
       background: url(background.png);
       background-size: cover;
+}
+.shop_item{
+display: inline-block;
+width:300px;
+padding-left:25px;
+text-align:center;
 }

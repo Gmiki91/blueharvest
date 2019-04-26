@@ -1,18 +1,14 @@
 var charId;
 fetchChar();
 function fetchItems(){
-    fetch(`/items`)
+    fetch(`/items/ownedBy?id=${charId}`)
      .then(function (response) {
                   return response.json();
          })
          .then(function (jsonData) {
             var shoplistDiv = document.getElementById("shop-list");
-            shoplistDiv.innerHTML = "";
+            shoplistDiv.innerHTML="";
             for (var i = 0; i < jsonData.length; i++) {
-                var sellable = "";
-                if (jsonData[i].qty ===0){
-                    sellable = "disabled";
-                 }
                 var divDiv = document.createElement("div");
                 divDiv.setAttribute('class', 'shop_item');
                 var image = document.createElement("img");
@@ -25,19 +21,20 @@ function fetchItems(){
                 getPic(image, imageId);
                 table.innerHTML = ` <tbody>
                                            <tr>
-                                               <td>${jsonData[i].name}<span style="font-size:14px">(x${jsonData[i].qty})<span></td>
-                                               <td>${jsonData[i].price} <img src="img/gomb.png"  style="vertical-align:text-bottom"></td>
-                                               <td><button ${sellable} onclick="buy(${jsonData[i].id})">Buy!</button></td>
+                                               <td>${jsonData[i].name}<span style="font-size:14px">(x${jsonData[i].qty})</span></td>
+                                               <td><button onclick="sale(${jsonData[i].id})">Elad</button> <br> <span style="font-size:14px">(${jsonData[i].price} <img src="img/gomb.png" width="20" height="20" style="vertical-align:text-bottom">)</span></td>
+                                               <td><button>Használ</button></td>
                                             </tr>
                                      </tbody>`
+
                 divDiv.appendChild(image);
                 divDiv.appendChild(table);
                 shoplistDiv.appendChild(divDiv)
             }
          });
 }
-function buy(itemId){
- fetch(`/items/removeFromShop?id=${itemId}&charId=${charId}`)
+function sale(itemId){
+     fetch(`/items/addToShop?id=${itemId}&charId=${charId}`)
 //      .then(function (response) {
 //                     return response.json()
 //                  })
@@ -45,7 +42,6 @@ function buy(itemId){
                     fetchItems();
                   });
 }
-
 function getPic(img, imageId){
     fetch(`/image/${imageId}`)
             .then(function (response) {
@@ -61,6 +57,7 @@ function fetchChar(){
           return response.json();
     })
     .then(function (jsonData) {
+    var navmenu = document.getElementById("cssmenu");
     if (jsonData.character!== null){
        charId = jsonData.character.id;
        fetchItems();

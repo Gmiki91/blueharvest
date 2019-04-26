@@ -1,19 +1,34 @@
 package blueharvest.items;
 
+import blueharvest.image.ItemService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 public class ItemController {
-    private ItemDao itemDao;
+    private ItemService itemService;
 
-    public ItemController(ItemDao itemDao) {
-        this.itemDao = itemDao;
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
     }
     @GetMapping("/items")
     public List<Item> getAllItems(){
-        return itemDao.getAllItems();
+        return itemService.getAllItems();
+    }
+    @GetMapping("/items/ownedBy")
+    public List<Item> getItemsOwnedBy(@RequestParam long id){
+        return itemService.getItemsOwnedBy(id);
+    }
+    @GetMapping("/items/removeFromShop")
+    public void removeFromShop(@RequestParam long id,@RequestParam long charId){
+        itemService.removeFromShop(id,charId);
+    }
+    @GetMapping("/items/addToShop")
+    public void addToShop(@RequestParam long id, @RequestParam long charId){
+        itemService.addToShop(id, charId);
+
     }
 }
