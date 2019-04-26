@@ -1,4 +1,5 @@
 var charId;
+var charMoney;
 fetchChar();
 function fetchItems(){
     fetch(`/items`)
@@ -10,7 +11,7 @@ function fetchItems(){
             shoplistDiv.innerHTML = "";
             for (var i = 0; i < jsonData.length; i++) {
                 var sellable = "";
-                if (jsonData[i].qty ===0){
+                if (jsonData[i].qty ===0 || charMoney < jsonData[i].price){
                     sellable = "disabled";
                  }
                 var divDiv = document.createElement("div");
@@ -27,7 +28,7 @@ function fetchItems(){
                                            <tr>
                                                <td>${jsonData[i].name}<span style="font-size:14px">(x${jsonData[i].qty})<span></td>
                                                <td>${jsonData[i].price} <img src="img/gomb.png"  style="vertical-align:text-bottom"></td>
-                                               <td><button ${sellable} onclick="buy(${jsonData[i].id})">Buy!</button></td>
+                                               <td><button ${sellable} onclick="buy(${jsonData[i].id}, ${jsonData[i].price})">Buy!</button></td>
                                             </tr>
                                      </tbody>`
                 divDiv.appendChild(image);
@@ -36,8 +37,8 @@ function fetchItems(){
             }
          });
 }
-function buy(itemId){
- fetch(`/items/removeFromShop?id=${itemId}&charId=${charId}`)
+function buy(itemId, price){
+ fetch(`/items/removeFromShop?id=${itemId}&price=${price}&charId=${charId}`)
 //      .then(function (response) {
 //                     return response.json()
 //                  })
@@ -63,6 +64,7 @@ function fetchChar(){
     .then(function (jsonData) {
     if (jsonData.character!== null){
        charId = jsonData.character.id;
+       charMoney= jsonData.character.money;
        fetchItems();
        }
        });

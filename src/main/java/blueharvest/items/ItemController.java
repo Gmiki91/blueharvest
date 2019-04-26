@@ -1,6 +1,5 @@
 package blueharvest.items;
 
-import blueharvest.image.ItemService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,12 +22,12 @@ public class ItemController {
         return itemService.getItemsOwnedBy(id);
     }
     @GetMapping("/items/removeFromShop")
-    public void removeFromShop(@RequestParam long id,@RequestParam long charId){
-        itemService.removeFromShop(id,charId);
+    public void removeFromShop(@RequestParam long id,@RequestParam int price,@RequestParam long charId){
+        itemService.removeFromShop(id,price,charId);
     }
     @GetMapping("/items/addToShop")
-    public void addToShop(@RequestParam long id, @RequestParam long charId){
-        itemService.addToShop(id, charId);
+    public void addToShop(@RequestParam long id,@RequestParam int price, @RequestParam long charId){
+        itemService.addToShop(id,price, charId);
 
     }
 }

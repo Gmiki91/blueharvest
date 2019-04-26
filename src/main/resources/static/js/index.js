@@ -81,9 +81,6 @@ function getPic(img){
              });
 }
 function hunt(idOfChar, idOfSkill){
-var request = {
-    "id" : idOfChar
-    };
  fetch(`/character/hunt?id=${idOfChar}&skillId=${idOfSkill}`, {
         method: "PUT"
     })
@@ -92,9 +89,7 @@ var request = {
     });
 }
 function learn(idOfChar, idOfSkill){
-var request = {
-    "id" : idOfChar
-    };
+
  fetch(`/character/learn?id=${idOfChar}&skillId=${idOfSkill}`, {
         method: "PUT"
     })

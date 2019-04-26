@@ -22,7 +22,7 @@ function fetchItems(){
                 table.innerHTML = ` <tbody>
                                            <tr>
                                                <td>${jsonData[i].name}<span style="font-size:14px">(x${jsonData[i].qty})</span></td>
-                                               <td><button onclick="sale(${jsonData[i].id})">Elad</button> <br> <span style="font-size:14px">(${jsonData[i].price} <img src="img/gomb.png" width="20" height="20" style="vertical-align:text-bottom">)</span></td>
+                                               <td><button onclick="sale(${jsonData[i].id}, ${jsonData[i].price})">Elad</button> <br> <span style="font-size:14px">(${jsonData[i].price} <img src="img/gomb.png" width="20" height="20" style="vertical-align:text-bottom">)</span></td>
                                                <td><button>Használ</button></td>
                                             </tr>
                                      </tbody>`
@@ -33,8 +33,8 @@ function fetchItems(){
             }
          });
 }
-function sale(itemId){
-     fetch(`/items/addToShop?id=${itemId}&charId=${charId}`)
+function sale(itemId, price){
+     fetch(`/items/addToShop?id=${itemId}&price=${price}&charId=${charId}`)
 //      .then(function (response) {
 //                     return response.json()
 //                  })

@@ -41,6 +41,11 @@ public class CharacterDao {
                 CHARACTER_ROW_MAPPER, name);
     }
 
+    public Character getCharacterById(long id) {
+        return jdbcTemplate.queryForObject("SELECT id, name, password, image_id, last_visit, food, money, status from characters where id = ?",
+                CHARACTER_ROW_MAPPER, id);
+    }
+
     public void updateLastVisit(long id, LocalDate lastVisit) {
         jdbcTemplate.update("UPDATE characters set last_visit=? where id = ?",
                 Date.valueOf(lastVisit),id);
