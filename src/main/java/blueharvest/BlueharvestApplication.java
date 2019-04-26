@@ -29,12 +29,13 @@ public class BlueharvestApplication extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/**","/register.html","/register.html/**","/image","/image/**","/character","/login","/character/**").permitAll()
-//                .antMatchers().hasRole("USER")
+                .antMatchers("/","/register.html","/register.html/**","/image","/image/**","/character","/login","/character/**").permitAll()
+                .antMatchers("/mailbox.html","/neighbours.html").hasRole("USER")
                 .and()
                 .formLogin()
                 .and()
                 .logout().logoutSuccessUrl("/index.html");
+
     }
 
     @Bean
