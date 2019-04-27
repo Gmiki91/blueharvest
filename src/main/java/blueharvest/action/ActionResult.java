@@ -1,13 +1,16 @@
 package blueharvest.action;
 
 import blueharvest.items.Item;
+import blueharvest.items.ItemDao;
 
 public class ActionResult {
     private String act;
+    private ItemDao itemDao;
 
 
-    public ActionResult(String status) {
+    public ActionResult(String status, ItemDao itemDao) {
         this.act = status;
+        this.itemDao = itemDao;
     }
 
     public int receivedFood(){
@@ -21,5 +24,11 @@ public class ActionResult {
             return 1;
         }
         return 0;
+    }
+    public Item receivedItem(){
+        if (act.equals("Orrtúrás")){
+            return itemDao.getRandomItem(10,30);
+        }
+        return null;
     }
 }

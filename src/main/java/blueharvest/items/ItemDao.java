@@ -55,7 +55,9 @@ public class ItemDao {
                 ((resultSet, i) -> resultSet.getInt("COUNT(*)")),itemId,charId);
     }
     public Item getRandomItem(int minPrice, int maxPrice){
-        return jdbcTemplate.queryForObject("Select id, name, description, price, quantity, type, image_id from items" +
-                " where price>? and price<? Order by RAND() Limit 1",ITEM_ROWMAPPER,minPrice,maxPrice);
+        try {
+            return jdbcTemplate.queryForObject("Select id, name, description, price, quantity, type, image_id from items" +
+                    " where price>? and price<? Order by RAND() Limit 1", ITEM_ROWMAPPER, minPrice, maxPrice);
+        }catch (NullPointerException e){return null;}
     }
 }

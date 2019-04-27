@@ -67,16 +67,18 @@ public class CharacterService {
                 remainingTime=-1;
                 characterDao.updateStatus(character.getId(), Status.AVAILABLE);
                 if (character.getStatus().equals(Status.INACTION)) {
-                    ActionResult loot = new ActionResult(nameOfSkill);
+                    ActionResult loot = new ActionResult(nameOfSkill, itemDao);
                     receivedFood = loot.receivedFood();
                     receivedMoney = loot.receivedMoney();
-                    recievedItem = itemDao.getRandomItem(0,100);
+                    recievedItem = loot.receivedItem();
+                    if (recievedItem != null){
+                        addItem(character,recievedItem);
+                    }
                     updateFood(character.getId(), character.getFood() + receivedFood);
                     updateMoney(character.getId(), character.getMoney() + receivedMoney);
                 } else if (character.getStatus().equals(Status.LEARNING)){
                     long skillId = actionDao.getSkillIdOfOngoingAction(character.getId());
                     skillsDao.addSkillLearned(character.getId(),skillId);
-
                 }
                 actionDao.removeAction(character.getId());
             }
@@ -86,6 +88,14 @@ public class CharacterService {
     }
     public List<Character>getAllCharacters(long id){
         return characterDao.getAllCharacters(id);
+    }
+
+    public void addItem(Character character, Item item){
+        if (itemDao.charAlreadyHasIt(item.getId(), character.getId())!=0){
+            itemDao.addQtyToBag(item.getId(),character.getId());
+        } else {
+            itemDao.addNewItemToBag(item.getId(),character.getId());
+        }
     }
 
     public void startAction(long id, long skillId){
