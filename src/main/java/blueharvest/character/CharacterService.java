@@ -2,6 +2,8 @@ package blueharvest.character;
 
 import blueharvest.action.ActionDao;
 import blueharvest.action.ActionResult;
+import blueharvest.items.Item;
+import blueharvest.items.ItemDao;
 import blueharvest.skills.Skill;
 import blueharvest.skills.SkillsDao;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,12 +22,14 @@ public class CharacterService {
     private PasswordEncoder passwordEncoder;
     private ActionDao actionDao;
     private SkillsDao skillsDao;
+    private ItemDao itemDao;
 
-    public CharacterService(CharacterDao characterDao, PasswordEncoder passwordEncoder, ActionDao actionDao, SkillsDao skillsDao) {
+    public CharacterService(CharacterDao characterDao, PasswordEncoder passwordEncoder, ActionDao actionDao, SkillsDao skillsDao, ItemDao itemDao) {
         this.characterDao = characterDao;
         this.passwordEncoder = passwordEncoder;
         this.actionDao = actionDao;
         this.skillsDao = skillsDao;
+        this.itemDao = itemDao;
     }
 
     public void createCharacter(Character character) {
@@ -44,7 +48,7 @@ public class CharacterService {
         skillsDao.addSkillLearned(characterDao.getCharacterByName(character.getName()).getId(),1);
     }
 
-    public CharacterInfo getCharacterByName(String name) {
+    public Loot getCharacterByName(String name) {
         Character character = characterDao.getCharacterByName(name);
         checkIfDayHasPassed(character);
         fillCharacterSkills(character);
@@ -53,6 +57,7 @@ public class CharacterService {
         int receivedMoney = -1;
         long remainingTime = 0;
         String nameOfSkill = "";
+        Item recievedItem = null;
 
         if (!character.getStatus().equals(Status.AVAILABLE)) {
             remainingTime = Duration.between(LocalDateTime.now(),
@@ -62,9 +67,10 @@ public class CharacterService {
                 remainingTime=-1;
                 characterDao.updateStatus(character.getId(), Status.AVAILABLE);
                 if (character.getStatus().equals(Status.INACTION)) {
-                    receivedFood = new ActionResult(nameOfSkill).receivedFood();
-                    receivedMoney = new ActionResult(nameOfSkill).receivedMoney();
-
+                    ActionResult loot = new ActionResult(nameOfSkill);
+                    receivedFood = loot.receivedFood();
+                    receivedMoney = loot.receivedMoney();
+                    recievedItem = itemDao.getRandomItem(0,100);
                     updateFood(character.getId(), character.getFood() + receivedFood);
                     updateMoney(character.getId(), character.getMoney() + receivedMoney);
                 } else if (character.getStatus().equals(Status.LEARNING)){
@@ -76,7 +82,7 @@ public class CharacterService {
             }
         }
         Character updatedCharacter = characterDao.getCharacterByName(name);
-        return new CharacterInfo(updatedCharacter, receivedFood, receivedMoney, remainingTime, nameOfSkill);
+        return new Loot(updatedCharacter, receivedFood, receivedMoney, remainingTime, nameOfSkill, recievedItem);
     }
     public List<Character>getAllCharacters(long id){
         return characterDao.getAllCharacters(id);

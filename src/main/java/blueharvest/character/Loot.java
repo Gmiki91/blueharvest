@@ -1,20 +1,32 @@
 package blueharvest.character;
 
-public class CharacterInfo {
+import blueharvest.items.Item;
+
+public class Loot {
     private Character character;
     private int receivedFood;
     private int receivedMoney;
     private long remainingTime;
     private String nameOfSkillLearned;
+    private Item receivedItem;
 
-    public CharacterInfo(Character character, int receivedFood, int receivedMoney, long remainingTime, String nameOfSkillLearned ) {
+    public Loot(Character character, int receivedFood, int receivedMoney, long remainingTime, String nameOfSkillLearned, Item receivedItem) {
         this.character = character;
         this.receivedFood = receivedFood;
         this.receivedMoney = receivedMoney;
         this.remainingTime=remainingTime;
         this.nameOfSkillLearned=nameOfSkillLearned;
+        this.receivedItem = receivedItem;
     }
-    public CharacterInfo(){}
+    public Loot(){}
+
+    public Item getReceivedItem() {
+        return receivedItem;
+    }
+
+    public void setReceivedItem(Item receivedItem) {
+        this.receivedItem = receivedItem;
+    }
 
     public void setRemainingTime(long remainingTime) {
         this.remainingTime = remainingTime;

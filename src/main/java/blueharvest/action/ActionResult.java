@@ -1,7 +1,10 @@
 package blueharvest.action;
 
+import blueharvest.items.Item;
+
 public class ActionResult {
     private String act;
+
 
     public ActionResult(String status) {
         this.act = status;

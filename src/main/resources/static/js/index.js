@@ -58,15 +58,18 @@ function fetchChar(){
                 learn(jsonData.character.id, selectLearnable.value)});
 
             if (jsonData.remainingTime===-1){
-                displayActionResults(jsonData.receivedFood, jsonData.receivedMoney, jsonData.nameOfSkillLearned);
+                displayActionResults(jsonData.receivedFood, jsonData.receivedMoney, jsonData.nameOfSkillLearned, jsonData.receivedItem);
             }
          }
     })
 }
-function displayActionResults(food, money, skill){
+function displayActionResults(food, money, skill, item){
     var resultP=document.getElementById("results");
     if (food!==-1){
         resultP.innerHTML=`Szörnyed egy kiadós ${skill}-n van túl. Zsákmánya: ${food} élelem és ${money} rémgomb!`;
+        if (item!==null){
+            resultP.innerHTML+=`<br>És még egy ${item.name} -t is talált!`;
+            }
     }else{
         resultP.innerHTML=`Szörnyed elsajátította a ${skill} művészetét!`;
     }

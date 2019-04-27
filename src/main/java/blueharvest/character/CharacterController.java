@@ -25,11 +25,11 @@ public class CharacterController {
         return validator.getResponseStatus();
     }
     @GetMapping("/character")
-    public CharacterInfo getCharacter(Authentication aut){
+    public Loot getCharacter(Authentication aut){
         if(aut != null){
            return characterService.getCharacterByName(aut.getName());
         } else {
-            return new CharacterInfo();
+            return new Loot();
         }
     }
     @GetMapping("/character/neighbours")

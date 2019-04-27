@@ -43,6 +43,9 @@ function buy(itemId, price){
 //                     return response.json()
 //                  })
                   .then(function (){
+                    fetchChar();
+                  })
+                  .then(function (){
                     fetchItems();
                   });
 }
